@@ -15,21 +15,42 @@ The goals / steps of this project are the following:
 
 [//]: # (Image References)
 
-[image1]: ./examples/grayscale.jpg "Grayscale"
-
+[test_images]: ./test_images_writeup.png "Test images"
+[test_mask]: ./test_images_masked.png "Test region of interest"
 ---
 
-### Reflection
+## Reflection
 
 ### 1. Describe your pipeline. As part of the description, explain how you modified the draw_lines() function.
 
-My pipeline consisted of 5 steps. First, I converted the images to grayscale, then I .... 
+My pipeline consisted of 5 steps. 
+* First, I converted the images to grayscale using `cv2.cvtColor` function.
+* Next, to reduce the noise, Gaussian blur was done.
+* Next, I performed edge detection using Canny algorithm.
+* The edge-detected image was then masked to isolate region of interest. This was done with the following piece of code:\
+    ``` python
+    # Store image dims
+    X = image.shape[1]
+    Y = image.shape[0]
+
+    vertices = np.array(
+        [[
+            (X//7,Y),
+            (8.5*X//9,Y),
+            (2.35*X//4,3.8*Y//6),
+            (1.7*X//4,3.8*Y//6)
+        ]], 
+        dtype= np.int32
+    )
+    ```
+    In order to test the region of interest, I plotted all test images with the mask applied:\
+    ![alt text][test_mask]
 
 In order to draw a single line on the left and right lanes, I modified the draw_lines() function by ...
 
-If you'd like to include images to show how the pipeline works, here is how to include an image: 
 
-![alt text][image1]
+Result on the test images:
+![alt text][test_images]
 
 
 ### 2. Identify potential shortcomings with your current pipeline
